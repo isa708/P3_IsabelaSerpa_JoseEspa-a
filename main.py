@@ -105,3 +105,11 @@ def menu():
                 axs[1].set_title("Trasladada")
                 plt.tight_layout()
                 plt.show()
+                
+        # Guardar imagen trasladada
+                import cv2
+                nombre_archivo = f"imagen_trasladada_{indice}_dx{dx}_dy{dy}.png"
+                cv2.imwrite(nombre_archivo, trasladada)
+                print(f"Imagen trasladada guardada como {nombre_archivo}")
+            else:
+                print("Clave inválida.")
