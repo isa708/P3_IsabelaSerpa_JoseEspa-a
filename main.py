@@ -41,4 +41,10 @@ def menu():
                 print(f"Paciente guardado con clave: {clave_pac}")
             else:
                 print("Clave no encontrada.")
+        elif opcion == 'c':
+            clave = input("Clave para guardar la imagen: ")
+            ruta = input("Ruta de la imagen JPG/PNG: ")
+            img_comun = ImagenComun(ruta)
+            dic_imagenes[clave] = img_comun
+            print(f"Imagen cargada con clave: {clave}")
                 
