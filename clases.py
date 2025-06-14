@@ -89,3 +89,68 @@ class ImagenMedica:
     # Setters
     def set_carpeta(self, carpeta): self.__carpeta = carpeta
     def set_volumen(self, volumen): self.__volumen = volumen
+
+# Clase para gestionar imágenes JPG o PNG
+class ImagenComun:
+    def __init__(self, ruta):
+        self.__ruta = ruta
+        self.__imagen = cv2.imread(ruta, 0)
+
+    # Binariza la imagen según un tipo y umbral
+    def binarizar(self, tipo, umbral):
+        tipos = {
+            'binario': cv2.THRESH_BINARY,
+            'binario_invertido': cv2.THRESH_BINARY_INV,
+            'truncado': cv2.THRESH_TRUNC,
+            'tozero': cv2.THRESH_TOZERO,
+            'tozero_invertido': cv2.THRESH_TOZERO_INV
+        }
+        _, binarizada = cv2.threshold(self.__imagen, umbral, 255, tipos[tipo])
+        self.__imagen = binarizada
+
+    # Aplica una operación morfológica de cierre
+    def transformacion_morfologica(self, kernel_size):
+        kernel = np.ones((kernel_size, kernel_size), np.uint8)
+        self.__imagen = cv2.morphologyEx(self.__imagen, cv2.MORPH_CLOSE, kernel)
+
+    # Dibuja una figura sobre la imagen y escribe texto
+    def dibujar_forma(self, forma, texto, umbral, kernel_size):
+        img_color = cv2.cvtColor(self.__imagen, cv2.COLOR_GRAY2BGR)
+        texto_completo = f"{texto}, Umbral: {umbral}, Kernel: {kernel_size}"
+        fuente = cv2.FONT_HERSHEY_SIMPLEX
+        escala = 0.5
+        grosor = 1
+        (ancho_texto, alto_texto), _ = cv2.getTextSize(texto_completo, fuente, escala, grosor)
+        alto_img, ancho_img = img_color.shape[:2]
+
+        if forma == 'circulo':
+            centro = (ancho_img // 2, alto_img // 2)
+            radio = min(centro) - 20
+            cv2.circle(img_color, centro, radio, (0, 255, 0), 2)
+            x_texto = centro[0] - ancho_texto // 2
+            y_texto = centro[1] + alto_texto // 2
+            cv2.putText(img_color, texto_completo, (x_texto, y_texto), fuente, escala, (0, 0, 255), grosor)
+
+        elif forma == 'cuadrado':
+            inicio = (20, 20)
+            fin = (ancho_img - 20, alto_img - 20)
+            cv2.rectangle(img_color, inicio, fin, (255, 0, 0), 2)
+            centro_x = (inicio[0] + fin[0]) // 2
+            centro_y = (inicio[1] + fin[1]) // 2
+            x_texto = centro_x - ancho_texto // 2
+            y_texto = centro_y + alto_texto // 2
+            cv2.putText(img_color, texto_completo, (x_texto, y_texto), fuente, escala, (0, 0, 255), grosor)
+
+        self.__imagen = cv2.cvtColor(img_color, cv2.COLOR_BGR2GRAY)
+
+    # Guarda la imagen actual en disco
+    def guardar(self, nombre_archivo):
+        cv2.imwrite(nombre_archivo, self.__imagen)
+
+    # Getters
+    def get_ruta(self): return self.__ruta
+    def get_imagen(self): return self.__imagen
+
+    # Setters
+    def set_ruta(self, ruta): self.__ruta = ruta
+    def set_imagen(self, imagen): self.__imagen = imagen
