@@ -47,4 +47,30 @@ def menu():
             img_comun = ImagenComun(ruta)
             dic_imagenes[clave] = img_comun
             print(f"Imagen cargada con clave: {clave}")
-                
+            
+        elif opcion == 'd':
+            clave = input("Clave de la imagen médica: ")
+            if clave in dic_imagenes and isinstance(dic_imagenes[clave], ImagenMedica):
+                img_medica = dic_imagenes[clave]
+
+                # Selección del corte
+                indice = int(input("Índice del corte a trasladar (0 en adelante): "))
+
+                # Menú fijo para dx
+                print("\nSeleccione el valor para dx:")
+                print("1. 50")
+                print("2. 100")
+                print("3. 150")
+                print("4. 200")
+                op_dx = int(input("Opción (1-4): "))
+                if op_dx == 1:
+                    dx = 50
+                elif op_dx == 2:
+                    dx = 100
+                elif op_dx == 3:
+                    dx = 150
+                elif op_dx == 4:
+                    dx = 200
+                else:
+                    print("Opción inválida. Se usará dx = 50.")
+                    dx = 50
