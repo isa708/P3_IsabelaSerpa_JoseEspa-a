@@ -126,7 +126,7 @@ class ImagenComun:
         if forma == 'circulo':
             centro = (ancho_img // 2, alto_img // 2)
             radio = min(centro) - 20
-            cv2.circle(img_color, centro, radio, (0, 255, 0), 2)
+            cv2.circle(img_color, centro, radio, (0, 255, 255), 2)
             x_texto = centro[0] - ancho_texto // 2
             y_texto = centro[1] + alto_texto // 2
             cv2.putText(img_color, texto_completo, (x_texto, y_texto), fuente, escala, (0, 0, 255), grosor)
@@ -134,12 +134,12 @@ class ImagenComun:
         elif forma == 'cuadrado':
             inicio = (20, 20)
             fin = (ancho_img - 20, alto_img - 20)
-            cv2.rectangle(img_color, inicio, fin, (255, 0, 0), 2)
+            cv2.rectangle(img_color, inicio, fin, (0, 255, 255), 2)
             centro_x = (inicio[0] + fin[0]) // 2
             centro_y = (inicio[1] + fin[1]) // 2
             x_texto = centro_x - ancho_texto // 2
             y_texto = centro_y + alto_texto // 2
-            cv2.putText(img_color, texto_completo, (x_texto, y_texto), fuente, escala, (0, 0, 255), grosor)
+            cv2.putText(img_color, texto_completo, (x_texto, y_texto), fuente, escala, (0, 255, 255), grosor)
 
         self.__imagen = cv2.cvtColor(img_color, cv2.COLOR_BGR2GRAY)
 
