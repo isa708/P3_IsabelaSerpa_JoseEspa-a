@@ -113,3 +113,20 @@ def menu():
                 print(f"Imagen trasladada guardada como {nombre_archivo}")
             else:
                 print("Clave inválida.")
+        elif opcion == 'e':
+            clave = input("Clave de la imagen JPG/PNG: ")
+            if clave in dic_imagenes and isinstance(dic_imagenes[clave], ImagenComun):
+                img_comun = dic_imagenes[clave]
+                print("Tipos: binario, binario_invertido, truncado, tozero, tozero_invertido")
+                tipo = input("Tipo de binarización: ")
+                umbral = int(input("Umbral: "))
+                img_comun.binarizar(tipo, umbral)
+                kernel_size = int(input("Tamaño de kernel: "))
+                img_comun.transformacion_morfologica(kernel_size)
+                forma = input("Forma (circulo/cuadrado): ")
+                img_comun.dibujar_forma(forma, "Imagen binarizada", umbral, kernel_size)
+                nombre_archivo = input("Nombre del archivo final (con extensión incluida): ")
+                img_comun.guardar(nombre_archivo)
+                print(f"Imagen procesada y guardada como {nombre_archivo}")
+            else:
+                print("Clave inválida.")
