@@ -74,3 +74,34 @@ def menu():
                 else:
                     print("Opción inválida. Se usará dx = 50.")
                     dx = 50
+        # Menú fijo para dy
+                print("\nSeleccione el valor para dy:")
+                print("1. 50")
+                print("2. 100")
+                print("3. 150")
+                print("4. 200")
+                op_dy = int(input("Opción (1-4): "))
+                if op_dy == 1:
+                    dy = 50
+                elif op_dy == 2:
+                    dy = 100
+                elif op_dy == 3:
+                    dy = 150
+                elif op_dy == 4:
+                    dy = 200
+                else:
+                    print("Opción inválida. Se usará dy = 50.")
+                    dy = 50
+
+                # Aplicar traslación
+                original, trasladada = img_medica.trasladar_imagen(indice, dx, dy)
+
+                # Mostrar resultados
+                from matplotlib import pyplot as plt
+                fig, axs = plt.subplots(1, 2, figsize=(10, 5))
+                axs[0].imshow(original, cmap='gray')
+                axs[0].set_title("Original")
+                axs[1].imshow(trasladada, cmap='gray')
+                axs[1].set_title("Trasladada")
+                plt.tight_layout()
+                plt.show()
