@@ -130,3 +130,12 @@ def menu():
                 print(f"Imagen procesada y guardada como {nombre_archivo}")
             else:
                 print("Clave inválida.")
+        elif opcion == 'f':
+            print("Saliendo...")
+            break
+
+        else:
+            print("Opción inválida.")
+
+if __name__ == "__main__":
+    menu()
