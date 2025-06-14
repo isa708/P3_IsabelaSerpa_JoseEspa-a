@@ -27,4 +27,18 @@ def menu():
                 img_medica.mostrar_cortes()
             dic_imagenes[clave] = img_medica
             print(f"Imagen médica guardada con clave: {clave}")
-            
+        elif opcion == 'b':
+            clave_img = input("Clave de la imagen médica cargada: ")
+            if clave_img in dic_imagenes:
+                img_medica = dic_imagenes[clave_img]
+                ds = img_medica.get_dataset_list()[0]
+                nombre = ds.PatientName if 'PatientName' in ds else "Anonimo"
+                edad = ds.PatientAge if 'PatientAge' in ds else "Desconocida"
+                ID = ds.PatientID if 'PatientID' in ds else "Sin ID"
+                paciente = Paciente(nombre, edad, ID, img_medica.get_volumen())
+                clave_pac = input("Clave para guardar el paciente: ")
+                dic_pacientes[clave_pac] = paciente
+                print(f"Paciente guardado con clave: {clave_pac}")
+            else:
+                print("Clave no encontrada.")
+                
